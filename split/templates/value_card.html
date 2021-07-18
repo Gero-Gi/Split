@@ -1,0 +1,28 @@
+<div class="card bg-primary {{clickable}}">
+    <div class="card-header ">
+        <h3 class="text-title text-white">
+            
+            {{title}}
+        </h3>
+    </div>
+   
+    <div class="card-body">
+        <span class="material-icons text-secondary icon-48 icon-center">{{icon}}</span>
+        <h1 class="text-white float-end h1">
+            {% if value < 0 %}
+            <span class="material-icons icon-36 text-danger icon-center">euro</span>
+            {% else %}
+            <span class="material-icons icon-36 text-success icon-center">euro</span>
+            {% endif %}
+            {{value}}
+        </h1>
+    </div>
+    <div class="float-end px-2 mt-3">
+        <h4 class="text-white">{{footer}}
+            <span class="float-end h4">
+            <span class="material-icons icon-36 text-secondary icon-center">tag</span>
+            {{footer_value}}
+        </span>
+        </h4>
+    </div>
+</div>

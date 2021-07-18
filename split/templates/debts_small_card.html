@@ -1,0 +1,61 @@
+{% load components %}
+<div class="card bg-primary mb-3">
+    <div class="card-header">
+
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">account_balance_wallet</span>
+            Your Debts
+        </h3>
+
+        {% for d in debts %}
+
+        <div class="card clickable shadow-lg bg-primary mb-2">
+
+            <div class="card-body">
+
+                <div class="container-fluid">
+
+                    <div class="row">
+
+                        <div class="col my-auto">
+                            <h4 class="text-title text-white">
+                                <image class="avatar-small" src="{{d.other_user.image.url}}"></image>
+                                {{d.other_user}}
+                            </h4>
+                        </div>
+
+                        <div class="col my-auto">
+                            <h2 class="text-title text-white text-cente">
+                                <span class="material-icons icon-32 icon-center text-{{d.color}}">euro</span>
+                                {{d.amount}}
+                            </h2>
+                        </div>
+
+                        <div class="col my-auto float-end">
+
+                            <h4 class="text-title text-white">
+                                <span class="material-icons icon-24 icon-center text-secondary">shopping_cart</span>
+                                shared expenses: {{d.group_transactions | length}}
+                            </h4>
+                            <h4 class="text-title text-white">
+                                <span class="material-icons icon-24 icon-center text-secondary">paid</span>
+                                transactions: {{d.private_transactions | length}}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>

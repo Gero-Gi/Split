@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 me-auto">
+    <div class="container-fluid">
+
+
+        <button class="btn-toggle-menu btn btn-primary">
+            <span class="material-icons icon-center">menu</span>
+        </button>
+
+
+        <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="material-icons icon-center">search</span>
+        </button>
+
+        <div class="collapse navbar-collapse mt-3 " id="navbarSupportedContent">
+            <form method="get" class="d-flex container-fluid flex-row justify-content-end">
+
+                <div class="me-2">
+                    <input name="start_date" value="{{query_param.start_date}}" class="form-control bg-primary text-white" type="date" id="start_date" placeholder="date" aria-label="Search">
+                    <label class="text-white form-label" for="start_date">Start</label>
+                </div>
+                <div class="me-2">
+
+                    <input name="end_date" value="{{query_param.end_date}}" class="form-control me-2 bg-primary text-white" type="date" id="end_date" placeholder="date" aria-label="Search">
+                    <label class="text-white form-label" for="end_date">End</label>
+                </div>
+                <div  class="me-2">
+                    <select name="tag" class="form-select form-control bg-primary text-white" id="tag" aria-label="Default select example">
+                        <option selected="selected" disabled>{{query_param.tag}}</option>
+                        {% for tag in tags %}
+                        <option value="{{tag.name}}">{{tag.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label class="text-white form-label" for="tag">Tag</label>
+                </div>
+                <div class="">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</nav>

@@ -1,0 +1,48 @@
+{% load static %}
+<div class="bg-primary" id="sidebar-wrapper">
+    <div class="flex-column pt-3 mr-0">
+
+        <div class="text-center">
+            <img class=' avatar-dash' src="{{ user.image.url }}" />
+            
+            
+        </div>
+
+        <h4 class="text-white text-title text-center mt-2">{{user.first_name}} {{user.last_name}}</h4>
+    <hr class="bg-white">
+        <div class="list-group list-group-flush pt-5 ">
+            <div class="container-fluid ">
+                <ul class="nav flex-column fixed">
+
+
+
+
+                    <li class="nav-item mb-1">
+                        {% if dashboard %}
+
+                        <a class="pb-3 h6 nav-link active bg-secondary text-white rounded mx-1" href="{% url 'dashboard' %}">
+                            <span class="material-icons text-white icon-btn">dashboard</span>Dashboard</a>
+
+                        {% else %}
+
+                        <a class="nav-link active  shadow text-white rounded" href="{% url 'dashboard' %}">
+                            <span class="material-icons text-white icon-center me-2">dashboard</span> Dashboard</a>
+
+                        {% endif %}
+                    </li>
+
+
+
+
+
+
+                </ul>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

@@ -1,0 +1,71 @@
+{% load components %}
+<div class="card bg-primary">
+
+    <div class="card-header">
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">today</span>
+            Last Transactions
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        {% for t in transactions %}
+
+        <div class="card bg-primary shadow-lg mb-2 clickable">
+
+            <div class="card-body">
+
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col">
+
+                            <h4 class="text-white">
+                                <span class="material-icons icon-center text-danger">send</span>
+                                {% you_or_name user t.sender %}
+                            </h4>
+
+                            <h4 class="text-white">
+                                <span class="material-icons icon-center text-success">person</span>
+                                {% you_or_name user t.receiver %}
+                            </h4>
+
+                            <h4 class="text-white">
+                                <span class="material-icons icon-center text-warning">calendar_today</span>
+                                {{t.transactioninfo.created_at}}
+
+                            </h4>
+
+                        </div>
+
+                        <div class="col mx-auto my-auto">
+
+                            <h1 class="text-white float-end">
+                                {% if t.sender.id != user.id %}
+                                <span class="material-icons text-success icon-36 icon-center">euro</span>
+                                {% else %}
+                                <span class="material-icons text-danger icon-36 icon-center">euro</span>
+                                {% endif %}
+                                
+                                {{ t.amount }}
+                                
+                                
+                            </h1>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+
+    </div>
+
+</div>

@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from . import managers
+from datetime import datetime
 
 User = get_user_model()
+
 
 class EGroup(models.Model):
     name = models.CharField(max_length=200)
@@ -23,50 +26,76 @@ class Membership(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     icon_name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
-    
+
 
 class Expense(models.Model):
     group = models.ForeignKey(EGroup, on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     description = models.TextField(null=True, blank=True)
     amount = models.FloatField()
-    tags = models.ManyToManyField(Tag, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    tag = models.ForeignKey(Tag, null=True, blank=True,
+                            on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return 'exp-{}-{}'.format(self.id, self.group)
 
 
 class Debt(models.Model):
-    debtor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='debtors')
-    creditor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creditors')
+    debtor = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='debtors')
+    creditor = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='creditors')
+    # if amount < 0 creditor is in debt
+    # else debtor is in debt
     amount = models.FloatField()
+
+    objects = managers.DebtManager()
 
     def __str__(self):
         return '{}-{}'.format(self.debtor, self.creditor)
 
+    def deposit(self, user, amount):
+        if user.id == self.debtor.id:
+            self.amount -= amount
+        elif user.id == self.creditor.id:
+            self.amount += amount
+
+    def get_other_user(self, user):
+        if self.debtor.id == user.id:
+            return self.creditor
+        return self.debtor
+
+    def get_amount(self, user):
+        if user.id == self.creditor.id:
+            return round(self.amount, 2)
+        return round(-self.amount, 2)
+
 
 class Transaction(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='senders')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receivers')
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='senders')
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='receivers')
     amount = models.FloatField()
-    debt = models.ForeignKey(Debt, on_delete = models.CASCADE)
-    expense = models.ForeignKey(Expense, null=True, on_delete=models.SET_NULL)
+    debt = models.ForeignKey(Debt, on_delete=models.CASCADE)
+    expense = models.ForeignKey(Expense, null=True, on_delete=models.CASCADE)
+
+    objects = managers.TransactionManager()
 
     def __str__(self):
         return 'trs-{}-{}-{}'.format(self.id, self.sender, self.receiver)
 
 
 class TransactionInfo(models.Model):
-    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, blank=True)
+    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE)
     description = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return self.transaction

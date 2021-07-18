@@ -1,0 +1,67 @@
+<div class="card bg-primary">
+
+    <div class="card-header">
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">today</span>
+            Last Expenses
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        {% for e in expenses %}
+
+        <div class="card bg-primary shadow-lg mb-2 clickable">
+
+            <div class="card-body">
+
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col">
+
+                            <h4 class="text-white">
+                                <span class="material-icons icon-center text-secondary">group</span>
+                                {{e.group}}
+                            </h4>
+
+                            <h4 class="text-white">
+                                <span class="material-icons icon-center text-secondary">person</span>
+                                {{e.created_by}}
+                            </h4>
+
+                            <h4 class="text-white">
+                                <span class="material-icons icon-center text-warning">calendar_today</span>
+                                {{e.created_at}}
+                            </h4>
+
+                        </div>
+
+                        <div class="col mx-auto my-auto">
+                            <div class="float-end">
+                                <h1 class="text-white ">
+                                    <span class="material-icons text-success icon-36 icon-center">euro</span>
+                                    {{e.amount}}
+                                </h1>
+                                <h3>
+                                    <div class="badge rounded-pill bg-info my-auto px-3 float-end">
+                                        <span
+                                            class="material-icons icon-center">{{e.tag.icon_name}}</span>{{e.tag.name}}
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+
+    </div>
+
+</div>

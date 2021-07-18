@@ -1,0 +1,29 @@
+{% extends 'index.html'%} {% block body %}
+
+<div class="container-fluid ">
+    <div id="wrapper" class="wrapper-content">
+
+        {% block sidebar %}
+        {% endblock %}
+
+    
+               
+
+                {% block navbar %}
+                {% endblock %}
+            <div class="container-fluid">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+
+
+
+{% endblock %}

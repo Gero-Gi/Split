@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load components %}
+
+
+{% block sidebar %}
+{% include 'sidenav.html' %}
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar_form.html' %}
+{% endblock %}
+
+
+
+{% block content %}
+
+<div id="grouped_accordion" class="accordion">
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+        <div class="col">
+            <div class="" type="button" data-bs-toggle="collapse" data-bs-target="#debts_collapse" aria-expanded="false" aria-controls="debts_collapse">
+                {% value_card 'Balance' 'account_balance_wallet' balance 'number of debts' n_debts True %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="" type="button" data-bs-toggle="collapse" data-bs-target="#groups_collapse" aria-expanded="false" aria-controls="groups_collapse">
+                {% value_card 'Groups' 'groups' expense_total 'your groups' n_groups %}
+            </div>
+        </div>
+        <div class="col">
+            {% value_card 'Transactions' 'paid' transaction_total 'number of transactions' n_transactions %}
+
+        </div>
+    </div>
+    <div id="debts_collapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#grouped_accordion">
+        {% debts_small_card debts user %}
+    </div>
+
+    <div id="groups_collapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#grouped_accordion">
+        <div class="card">
+            <div class="card-header">PORCODIO</div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+
+        {% chart_card expenses_chart 'ex_id' 'shopping_cart' %}
+    </div>
+    <div class="col">
+        {% expenses_card_small expenses %}
+    </div>
+    <div class="col">
+        {% transactions_card_small transactions user %}
+    </div>
+    <div class="col">
+        {% chart_card transactions_chart 'tr_id' 'paid' %}
+    </div>
+</div>
+
+
+{% endblock %}

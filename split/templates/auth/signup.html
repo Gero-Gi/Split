@@ -1,0 +1,46 @@
+{%extends 'index.html'%}
+
+{%block body%}
+<div class="d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container mx-auto">
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-floating mb-3">
+                <input name='first_name' required id='id_first_name' class="form-control" placeholder="Fisrt Name">
+                <label for="id_first_name">Nome</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input name='last_name' required id='id_last_name' class="form-control" placeholder="Last Name">
+                <label for="id_last_name">Cognome</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type='email' name='email' required id='id_email' class="form-control"
+                    placeholder="name@example.com">
+                <label for="id_email">Email</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type='password' name='password1' required id='id_password1' class="form-control"
+                    placeholder="password">
+                <label for="id_password1">Password</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type='password' name='password2' required id='id_password2' class="form-control"
+                    placeholder="Password Confirmation">
+                <label for="id_password2">Conferma Passsword</label>
+            </div>
+
+
+
+
+            <button class="btn btn-primary mx-auto" type="submit">Registrati</button>
+        </form>
+
+    </div>
+</div>
+{%endblock%}

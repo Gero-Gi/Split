@@ -1,0 +1,93 @@
+<div class="card bg-primary  h-100 rounded-3 border-0 shadow">
+    <div class="card-header clickable">
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">{{icon}}</span>
+            {{title}}
+        </h3>
+
+        <h1 class="ml-5 my-3 text-title h1 text-white float-right">
+            <span class="material-icons icon-48 text-success icon-center">euro</span>
+            {{value}}
+        </h1>
+        
+    </div>
+
+    <div class="card-body mx-0">
+
+
+
+        <canvas class="card-img-bottom" id="{{id}}"></canvas>
+
+    </div>
+</div>
+
+<script>
+
+    function get_color(color, alpha = 1) {
+        var st = null
+
+        alpha = parseInt((alpha * parseInt('ff', 16))).toString(16)
+        return `#${color}${alpha}`
+
+    }
+    var json = JSON.parse('{{json | escapejs}}')
+    var ctx = document.getElementById(json.id).getContext('2d');
+
+
+    // The data for our dataset
+    var data = {
+
+
+        labels: json.labels,
+        datasets: [
+
+            {
+                backgroundColor: get_color('5464BF', .4),
+                borderColor: get_color('696FFB'),
+                data: json.data,
+
+            },
+
+        ]
+    };
+
+
+    // Configuration options go here
+    var options = {
+        legend: { display: false },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: false,
+
+                },
+                ticks: {
+                    display: false,
+
+                },
+
+            }],
+            yAxes: [{
+                gridLines: {
+                   // display: false,
+
+                },
+                ticks: {
+                   // display: false,
+
+                },
+
+            }],
+
+
+        },
+
+    };
+
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options,
+    });
+</script>
