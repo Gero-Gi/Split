@@ -1,0 +1,134 @@
+{% load components %}
+{% load group_components %}
+
+<div class="card bg-primary text-white">
+
+
+    <div class="card-body">
+
+        <div class="row g-0">
+
+            <div class="col-md-6">
+                <div class="card-body">
+
+                    <h3 class="text-title"><img src="{{ group.image.url }}" alt="" class="avatar-small"> {{group.name}}
+                    </h3>
+
+                    <div class="pt-3 ps-3">
+                        <div class="h4">
+                            <span class="material-icons text-secondary icon-text">calendar_today</span>
+                            creato: {{group.created_at}}
+                        </div>
+
+                        <div class="h4">
+                            <span class="material-icons text-secondary icon-text">group</span>
+                            membri: {% get_memberships group True %}
+                        </div>
+
+                        <div class="h4">
+                            <span class="material-icons text-secondary icon-text">shopping_cart</span>
+                            spese:
+                            <span class="material-icons text-success icon-text">euro</span>{{ expenses.total_amount }}
+                        </div>
+                        <div class="h4">
+                            <span class="material-icons text-danger icon-text">paid</span>
+                            hai speso:
+                            <span class="material-icons text-danger icon-text">euro</span>
+                            {{ transactions.total_amount}}
+                        </div>
+
+                        {% if group_admin %}
+                        <h4 class="text-title text-white">
+                            <span class="material-icons icon-24 icon-center text-warning">shield</span>
+                            admin
+                        </h4>
+                        {% endif %}
+
+                        <div class="btn-group mt-2" role="group" aria-label="First group">
+                            <button class="btn btn-lg btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#add_expense">
+                                <span class="material-icons icon-flex">add_shopping_cart</span>
+                            </button>
+
+                            {% if group_admin %}
+                            <button class="btn btn-lg btn-secondary">
+                                <span class="material-icons icon-flex">edit</span>
+                            </button>
+
+                            <button class="btn btn-lg btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#add_member">
+                                <span class="material-icons icon-flex">person_add</span>
+                            </button>
+
+                            <button class="btn btn-lg text-white btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#delete_group">
+                                <span class="material-icons icon-flex">delete</span>
+
+                            </button>
+                            {% endif %}
+                            <button class="btn btn-lg text-white btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#leave_group">
+                                <span class="material-icons icon-flex">logout</span>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="img-fluid bg-dark rounded shadow">
+                    {% spent_chart transactions 'chart_group' 'Uscite' 'spesi' 'paid' True %}
+                </div>
+            </div>
+        </div>
+        <!-- <div class="container-fluid py-0 my-0">
+
+            <div class="row">
+
+                <div class="col-5 text-center">
+                    <img class="avatar-medium" src="{{ group.image.url }}" alt="not found">
+
+
+                    <div class="h3 rounded-3 p-4 bg-dark shadow text-center">
+                        <span class="material-icons text-danger icon-text">euro</span>{{ transactions.total_amount }}
+                        <span class="h5">spesi</span>
+                    </div>
+
+                    <div class="bg-dark py-3 px-2 rounded">
+                        <div class="h5">
+                            <span class="material-icons text-white icon-text">calendar_today</span>
+                            creato: {{group.created_at}}
+                        </div>
+
+                        <div class="h5">
+                            <span class="material-icons text-white icon-text">group</span>
+                            membri: {% get_memberships group True %}
+                        </div>
+
+                        <div class="h5">
+                            <span class="material-icons text-white icon-text">shopping_cart</span>
+                            spese:
+                            <span class="material-icons text-success icon-text">euro</span>{{ expenses.total_amount }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+
+
+    </div>
+
+    {% modal_form 'delete_group' 'Elimina gruppo' 'Vuoi eliminare il gruppo?' %}
+    {% modal_form 'leave_group' 'Esci dal gruppo' 'Vuoi lasciare il gruppo?' %}
+    {% include 'group_components/add_member.html' with id='add_member' %}

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load components %}
+{% load dashboard_components %}
 
 
 {% block sidebar %}
@@ -14,7 +15,7 @@
 
 {% block content %}
 
-<div id="grouped_accordion" class="accordion">
+<div id="grouped_accordion" class="accordion mt-3">
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
         <div class="col">
             <div class="" type="button" data-bs-toggle="collapse" data-bs-target="#debts_collapse" aria-expanded="false" aria-controls="debts_collapse">
@@ -23,7 +24,7 @@
         </div>
         <div class="col">
             <div class="" type="button" data-bs-toggle="collapse" data-bs-target="#groups_collapse" aria-expanded="false" aria-controls="groups_collapse">
-                {% value_card 'Groups' 'groups' expense_total 'your groups' n_groups %}
+                {% value_card 'Groups' 'groups' expense_total 'your groups' n_groups True %}
             </div>
         </div>
         <div class="col">
@@ -36,25 +37,24 @@
     </div>
 
     <div id="groups_collapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#grouped_accordion">
-        <div class="card">
-            <div class="card-header">PORCODIO</div>
-        </div>
+        {% include 'dashboard_components/groups_small_card.html' %}
     </div>
 </div>
 
 <div class="row row-cols-1 row-cols-md-2 g-4">
     <div class="col">
 
-        {% chart_card expenses_chart 'ex_id' 'shopping_cart' %}
+        {% chart_card expenses_chart 'ex_id' 'shopping_cart' True %}
+    </div>
+    <div class="col">
+        {% chart_card transactions_chart 'tr_id' 'paid' %}
+
     </div>
     <div class="col">
         {% expenses_card_small expenses %}
     </div>
     <div class="col">
         {% transactions_card_small transactions user %}
-    </div>
-    <div class="col">
-        {% chart_card transactions_chart 'tr_id' 'paid' %}
     </div>
 </div>
 

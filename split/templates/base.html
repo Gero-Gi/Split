@@ -1,22 +1,20 @@
 {% extends 'index.html'%} {% block body %}
 
 <div class="container-fluid ">
-    <div id="wrapper" class="wrapper-content">
+    <div id="wrapper">
 
         {% block sidebar %}
         {% endblock %}
 
-    
-               
 
-                {% block navbar %}
-                {% endblock %}
-            <div class="container-fluid">
+        <div class="container-fluid pt-3">
+            {% block navbar %}
+            {% endblock %}
                 {% block content %}
                 {% endblock %}
-            </div>
         </div>
     </div>
+</div>
 </div>
 
 

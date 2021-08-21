@@ -1,0 +1,93 @@
+<div class="bg-dark">
+    <canvas class="card-img-bottom" id="{{id}}"></canvas>
+</div>
+
+<script>
+
+    function get_color(color, alpha = 1) {
+        var st = null
+
+        alpha = parseInt((alpha * parseInt('ff', 16))).toString(16)
+        return `#${color}${alpha}`
+
+    }
+    var json = JSON.parse('{{json | escapejs}}')
+    var ctx = document.getElementById(json.id).getContext('2d');
+
+    var styles = {
+        primary: {
+            border: get_color('F7AA68'),
+            background: get_color('F7AA68', .4),
+        },
+        spent: {
+            border: get_color('EB748C'),
+            background: get_color('5464BF', .4),
+        }
+    };
+
+    var style = undefined;
+    if (json.spent)
+        style = styles.spent;
+    else
+        style = styles.primary;
+    // The data for our dataset
+    var data = {
+
+
+        labels: json.labels,
+        datasets: [
+
+            {
+                backgroundColor: style.background,
+                borderColor: style.border,
+                data: json.data,
+                fill: true,
+
+            },
+
+        ]
+    };
+
+
+    // Configuration options go here
+    var options = {
+        plugins: {
+            legend: false,
+            labels: false,
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false,
+
+                },
+                ticks: {
+                    display: false,
+
+                },
+
+            },
+            y: {
+                grid: {
+                    display: false,
+
+                },
+                ticks: {
+                    display: false,
+
+                },
+
+            },
+
+
+        },
+
+    };
+
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options,
+    });
+</script>

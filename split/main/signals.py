@@ -13,6 +13,13 @@ def post_expense(sender, instance, **kwargs):
     receivers = models.Membership.objects.filter(group=instance.group).exclude(pk=sender.pk)
     # the amount split 
     amount = round(instance.amount / (receivers.count() + 1), 2)
+    # self transaction
+    models.Transaction.objects.create(
+        sender=sender.user,
+        receiver=sender.user,
+        amount=amount,
+        debt=None,
+        expense=instance)
     for receiver in receivers:
         models.Transaction.objects.create(
             sender=sender.user,
@@ -25,6 +32,7 @@ def post_expense(sender, instance, **kwargs):
 # make a deposit, after each transaction, to adjust the debt
 @receiver(post_save, sender=models.Transaction)
 def post_transaction(sender, instance, **kwargs):
+    if instance.is_self_transaction(): return 
     debt = instance.debt
     debt.deposit(instance.sender, instance.amount)
     debt.save()
@@ -32,6 +40,7 @@ def post_transaction(sender, instance, **kwargs):
 # adjust/restore debt
 @receiver(post_delete, sender=models.Transaction)
 def post_delete_transaction(sender,instance, **kwargs):
+    if instance.is_self_transaction(): return 
     try:
         debt = instance.debt
         debt.deposit(instance.receiver, instance.amount)

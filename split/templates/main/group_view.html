@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load components %}
+{% load group_components %}
 
 
 {% block sidebar %}
@@ -13,5 +14,74 @@
 
 
 {% block content %}
+
+<div class="row row-cols-1 row-cols-md-1 g-4 mb-3">
+    <div class="col">
+        {% include 'group_components/group_info.html' %}
+    </div>
+
+    <!-- members -->
+    <div class="col">
+        <div class="card bg-primary text-white mt-3">
+            <div class="card-header clickable" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_debt" aria-expanded="false" aria-controls="collapse_debt">
+                <h3 class="text-title text-white">
+                    <span class="material-icons icon-36 text-white icon-center">group</span>
+                    Membri
+                </h3>
+            </div>
+            <div class="collapse" id="collapse_debt">
+                <div class="card-body">
+                    
+                    {% for m in memberships %}
+                        {% member_row m user %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- expenses -->
+    <div class="col">
+        <div class="card bg-primary text-white mt-3">
+
+            <div class="card-header">
+                <h3 class="text-title text-white">
+                    <span class="material-icons icon-36 text-white icon-center">shopping_cart</span>
+                    Spese
+                </h3>
+            </div>
+            <div class="accordion" id="expense_group_acc">
+                <div class="card-body">
+
+                    {% for e in paginated_expenses %}
+                    {% expense_row e user %}
+                    {% endfor %}
+                    <div class="text-center">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            {% if paginated_expenses.has_previous %}
+                            <a href="{% url 'group' group.pk %}?page={{paginated_expenses.previous_page_number}}"
+                                class="btn btn-lg text-white btn-secondary">
+                                <span class="material-icons icon-flex">navigate_before</span>
+                            </a>
+                            {% endif %}
+                            {% if paginated_expenses.has_next %}
+                            <a href="{% url 'group' group.pk %}?page={{paginated_expenses.next_page_number}}"
+                                class="btn btn-lg text-white btn-secondary">
+                                <span class="material-icons icon-flex">navigate_next</span>
+                            </a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock %}

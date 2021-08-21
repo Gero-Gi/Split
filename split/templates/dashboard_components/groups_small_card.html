@@ -1,0 +1,18 @@
+{% load dashboard_components %}
+<div class="card bg-primary mb-3 ">
+
+    <div class="card-header">
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">group</span>
+            Your Groups
+        </h3>
+    </div>
+
+    <div class="card-body">
+        {% for g in groups %}
+            {% group_row g %}
+            
+        {% endfor %}
+    </div>
+
+</div>

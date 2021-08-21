@@ -1,0 +1,42 @@
+<div onclick="location.href='{% url 'group' group.pk %}';" href="" class="card clickable shadow-lg bg-primary mb-2">
+
+    <div class="card-body">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col my-auto">
+                    <h4 class="text-title text-white">
+                        <image class="avatar-small" src="{{group.image.url}}"></image>
+                        {{group.name}}
+                    </h4>
+                </div>
+
+                <div class="col my-auto">
+                    <h2 class="text-title text-white text-cente">
+                        <span class="material-icons icon-32 icon-center text-success">euro</span>
+                        {{expenses_amount}}
+                    </h2>
+                </div>
+
+                <div class="col my-auto float-end">
+
+                    <h4 class="text-title text-white">
+                        <span class="material-icons icon-24 icon-center text-secondary">tag</span>
+                         expenses: {{expenses_count}}
+                    </h4>
+                    <h4 class="text-title text-white">
+                        <span class="material-icons icon-24 icon-center text-secondary">tag</span>
+                         memebers: {{members| length}}
+                    </h4>
+                    <h4 class="text-title text-white">
+                        <span class="material-icons icon-24 icon-center text-warning">calendar_today</span>
+                        created_at: {{group.created_at}}
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

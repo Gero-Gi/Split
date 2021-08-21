@@ -71,6 +71,7 @@ class FakeDB():
 
         print('database populated successfully!')
         print(self.users[3].email)
+      
 
     def populate_tags(self):
         for name, icon in self._tags.items():
@@ -92,7 +93,7 @@ class FakeDB():
             user = User.objects.create(
                 first_name=first_name,
                 last_name=last_name,
-                email='{}.{}@gmail.com'.format(first_name, last_name),
+                email='{}.{}@gmail.com'.format(first_name, last_name).lower(),
             )
             user.set_password('password')
             user.image.save('{}-{}.png'.format(user.id,

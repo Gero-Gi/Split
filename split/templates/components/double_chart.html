@@ -1,0 +1,163 @@
+<div class="card bg-primary  h-100 rounded-3 p-0 border-0 shadow">
+    <div class="card-header clickable">
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">{{icon}}</span>
+            {{title}}
+        </h3>
+
+        <h1 class="ml-5 my-3 text-title h1 text-white float-right">
+            <span class="material-icons icon-48 text-success icon-center">euro</span>
+            {{value}}
+        </h1>
+
+    </div>
+
+    <div class="card-body mx-0 p-0 m-0">
+
+
+
+        <canvas class="card-img-bottom" id="{{id}}"></canvas>
+
+    </div>
+</div>
+<script>
+
+
+
+    function get_color(color, alpha = 1) {
+        var st = null
+
+        alpha = parseInt((alpha * parseInt('ff', 16))).toString(16)
+        return `#${color}${alpha}`
+
+    }
+
+    styles = {
+        total_spent: {
+            a: {
+                border: get_color('696FFB'),
+                background: get_color('5464BF', .4)
+            },
+            b: {
+                border: get_color('EB748C'),
+                background: get_color('EB748C', .4)
+            }
+        },
+
+        received_spent: {
+            a: {
+                border: get_color('52D9B3'),
+                background: get_color('52D9B3', .4)
+            },
+            b: {
+                border: get_color('EB748C'),
+                background: get_color('EB748C', .4)
+            }
+        }
+    };
+
+    var json = JSON.parse('{{json | escapejs}}');
+    var style = undefined
+    if (json.total_spent === true)
+        style = styles.total_spent;
+    else
+        style = styles.received_spent;
+
+    var ctx = document.getElementById(json.id).getContext('2d');
+
+    var options = {
+        layout: {
+            padding: 0,
+        },
+        legend: {
+            display: false,
+            labels: {
+                display: false
+            }
+        },
+        plugins: {
+            legend: false,
+            labels: false,
+            grid: false,
+        },
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: true,
+        },
+        stacked: false,
+        scales: {
+
+            
+            
+            x: {
+                display: false,
+                ticks: {
+                    display: false,
+
+                },
+
+                grid: {
+                    display: false,
+                    drawOnChartArea: false
+                },
+
+            },
+            
+            
+            y: {
+                display: false,
+                grid: {
+                    display: false,
+                    drawOnChartArea: false
+                },
+                ticks: {
+                    display: false,
+
+                },
+            },
+            y1: {
+                display: false,
+
+
+                // grid line settings
+                grid: {
+                    display: false,
+                    drawOnChartArea: false
+                },
+                ticks: {
+                    display: false,
+
+                },
+            },
+        }
+    }
+
+
+    var data = {
+        labels: json.labels,
+        datasets: [
+            {
+                data: json.dataset_a,
+                borderColor: style.a.border,
+                backgroundColor: style.a.background,
+                yAxisID: 'y',
+            },
+            {
+                data: json.dataset_b,
+                borderColor: style.b.border,
+                backgroundColor: style.b.background,
+                yAxisID: 'y1'
+            }
+        ]
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options,
+
+
+
+    });
+</script>

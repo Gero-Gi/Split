@@ -1,0 +1,28 @@
+<div class="card bg-primary  h-100 rounded-3 border-0 shadow">
+    <div class="card-header clickable">
+        <h3 class="text-title text-white">
+            <span class="material-icons icon-36 text-secondary icon-center">{{icon}}</span>
+            {{title}}
+        </h3>
+
+        <h1 class="ml-5 my-3 text-title h1 text-white float-right">
+            {% if spent %}
+            <span class="material-icons icon-48 text-success icon-center">euro</span>
+            {% else %}
+            <span class="material-icons icon-48 text-success icon-center">euro</span>
+            {% endif %}
+            {{value}}
+            <span class="text-light h3">{{subtitle}}</span>
+        </h1>
+
+    </div>
+
+    <div class="card-body mx-0 pt-0 pb-1 px-1 ">
+
+
+
+        {% include 'components/base_chart.html' %}
+
+    </div>
+</div>
+

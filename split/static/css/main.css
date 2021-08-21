@@ -15,11 +15,26 @@
     top: 0%;
     transform: translateY(0%);
   }
+.icon-flex {
+  margin-right: .25rem;
+  position: relative;
+  top: 0%;
+  transform: translateY(20%);
+  margin-right: .25rem;
+}
+
 
 .icon-center {
     position: relative;
     top: 50%;
-    transform: translateY(10%);
+    transform: translateY(20%);
+}
+
+.icon-text {
+  position: relative;
+  top: 50%;
+  margin-right: .25rem;
+  transform: translateY(20%);
 }
 
 .avatar-dash {
@@ -31,8 +46,15 @@
 
 .avatar-small {
   vertical-align: middle;
-  width: 50px !important;
-  height: 50px !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50%;
+}
+
+.avatar-medium {
+  vertical-align: middle;
+  width: 11.3rem !important;
+  height: 11.3rem !important;
   border-radius: 50%;
 }
 

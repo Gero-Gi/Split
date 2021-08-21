@@ -1,0 +1,69 @@
+{% load components %}
+<div class="card bg-primary shadow-lg mb-2 ">
+
+    <div class="card-body">
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col">
+
+
+                    <h4 class="text-white">
+                        <span class="material-icons icon-center text-secondary">person</span>
+                        {% you_or_name user e.created_by %}
+                    </h4>
+
+                    <h4 class="text-white">
+                        <span class="material-icons icon-center text-warning">calendar_today</span>
+                        {{e.created_at}}
+                    </h4>
+
+                    <h3>
+                        <div class="badge text-dark pb-3 rounded-3 bg-white my-auto px-3 ">
+                            <span class="material-icons text-dark icon-center">{{e.tag.icon_name}}</span>{{e.tag.name}}
+                        </div>
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <button class="btn btn-lg btn-secondary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse-{{e.pk}}" aria-expanded="false" aria-controls="collapse-{{e.pk}}">
+                                <span class="material-icons icon-flex">info</span>
+                            </button>
+                            {% if can_delete %}
+                            <button class="btn btn-lg text-white btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#delete_expense{{e.id}}">
+                                <span class="material-icons icon-flex">delete</span>
+                            </button>
+                            {% endif %}
+
+                        </div>
+                    </h3>
+
+
+
+                </div>
+
+                <div class="col mx-auto my-auto">
+                    <div class="float-end">
+                        <h1 class="text-white ">
+                            <span class="material-icons text-success icon-36 icon-center">euro</span>
+                            {{e.amount}}
+                        </h1>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="">
+    <div id="collapse-{{e.pk}}" class="accordion-collapse collapse mx-3 mb-3" aria-labelledby="headingOne"
+        data-bs-parent="#expense_group_acc">
+        <div class="h5">{{e.description}}</div>
+
+    </div>
+</div>
+
+{% modal_form 'delete_expense' 'Elimina spesa' 'Vuoi eliminare la spesa?' e.id %}

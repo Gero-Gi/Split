@@ -1,45 +1,113 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 me-auto">
-    <div class="container-fluid">
+<div id="query_form_accordion" class="accordion">
+    <nav class="navbar  mx-0 container-fluid navbar navbar-primary bg-primary rounded-3 mb-1 ">
 
 
-        <button class="btn-toggle-menu btn btn-primary">
-            <span class="material-icons icon-center">menu</span>
+        <button class="btn-toggle-menu btn btn-primary ms-1">
+            <span class="material-icons icon-btn">menu</span>
         </button>
 
 
-        <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse"
+        <!-- <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
             <span class="material-icons icon-center">search</span>
-        </button>
-
-        <div class="collapse navbar-collapse mt-3 " id="navbarSupportedContent">
-            <form method="get" class="d-flex container-fluid flex-row justify-content-end">
-
-                <div class="me-2">
-                    <input name="start_date" value="{{query_param.start_date}}" class="form-control bg-primary text-white" type="date" id="start_date" placeholder="date" aria-label="Search">
-                    <label class="text-white form-label" for="start_date">Start</label>
+        </button> -->
+        <div class="d-flex flex-row justify-content-end">
+            <h5>
+                <div class="me-2 text-white badge p-0 pb-2 px-3 bg-secondary">
+                    <span class="material-icons icon-24 icon-text">date_range</span> > 30/04/2021
                 </div>
-                <div class="me-2">
+            </h5>
+            <h5>
+                {% if query_param.tag is not None %}
+                <div class="text-white me-2 badge rounded-3 bg-secondary p-0 pb-2 px-3 float-end">
+                    <span
+                        class="material-icons text-white icon-text">{{query_param.tag.icon_name}}</span>{{query_param.tag.name}}
+                </div>
+                {% endif %}
+            </h5>
 
-                    <input name="end_date" value="{{query_param.end_date}}" class="form-control me-2 bg-primary text-white" type="date" id="end_date" placeholder="date" aria-label="Search">
-                    <label class="text-white form-label" for="end_date">End</label>
-                </div>
-                <div  class="me-2">
-                    <select name="tag" class="form-select form-control bg-primary text-white" id="tag" aria-label="Default select example">
-                        <option selected="selected" disabled>{{query_param.tag}}</option>
-                        {% for tag in tags %}
-                        <option value="{{tag.name}}">{{tag.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <label class="text-white form-label" for="tag">Tag</label>
-                </div>
-                <div class="">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </div>
-            </form>
 
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#query_filters"
+                aria-expanded="false" aria-controls="query_filters">
+                <span class="material-icons text-white icon-btn">filter_list</span>
+            </button>
         </div>
+    </nav>
+    <div id="query_filters" class="accordion-collapse collapse" aria-labelledby="headingOne"
+        data-bs-parent="#query_form_accordion">
+        <div class="card bg-primary mb-1">
+            <div class="card-body">
+                <h3 class="text-white text-title">
+                    <span class="material-icons icon-36 icon-center me-1 mb-3 text-white">filter_list</span>Filtri
+                </h3>
+                <form method="get" class="container-fluid">
 
+                    <div class="row">
+                        <div class="me-2 col">
+
+                            <input name="start_date" value="{{query_param.start_date}}"
+                                class="form-control bg-primary text-white" type="date" id="start_date"
+                                placeholder="date" aria-label="Search">
+                            <label for="start_date" class="text-white form-label">Inizio</label>
+                        </div>
+
+                        <div class="me-2 col">
+
+                            <input name="end_date" value="{{query_param.end_date}}"
+                                class="form-control me-2 bg-primary text-white" type="date" id="end_date"
+                                placeholder="date" aria-label="Search">
+                            <label for="end_date" class="text-white form-label">Fine</label>
+                        </div>
+
+                        <div class="me-2 col">
+
+                            <select name="tag" class="form-select form-control bg-primary text-white" id="tag"
+                                aria-label="Default select example">
+
+                                <option selected="selected" disabled>{{query_param.tag}}</option>
+                                {% for tag in tags %}
+                                <option class="" value="{{tag.name}}">
+                                    {{tag.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="tag" class="text-white form-label">Tag</label>
+                        </div>
+
+                        <div class="col">
+
+                            <div class="d-grid gap-2">
+                                
+                                <button type="submit" class="btn btn-secondary" type="button"><strong>Filtra</strong></button>
+
+                                <div onClick="window.location.reload();" class="btn btn-danger">
+                                    <strong>Azzera</strong>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+
+                                <div class="col">
+                                    <div class="mt-2">
+
+                                        <button id="submit_filters" class="btn btn-secondary"
+                                            type="submit">Filtra</button>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mt-2">
+
+                                        <button id="submit_filters" class="btn btn-lg btn-secondary"
+                                            type="submit">Filtra</button>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-</nav>
+
+</div>

@@ -42,6 +42,8 @@ class Expense(models.Model):
                             on_delete=models.SET_NULL)
     created_at = models.DateTimeField(default=datetime.now)
 
+    objects = managers.ExpenseQuerySet.as_manager()
+
     def __str__(self):
         return 'exp-{}-{}'.format(self.id, self.group)
 
@@ -55,7 +57,7 @@ class Debt(models.Model):
     # else debtor is in debt
     amount = models.FloatField()
 
-    objects = managers.DebtManager()
+    objects = managers.DebtQuerySet.as_manager()
 
     def __str__(self):
         return '{}-{}'.format(self.debtor, self.creditor)
@@ -71,7 +73,7 @@ class Debt(models.Model):
             return self.creditor
         return self.debtor
 
-    def get_amount(self, user):
+    def get_balance(self, user):
         if user.id == self.creditor.id:
             return round(self.amount, 2)
         return round(-self.amount, 2)
@@ -83,13 +85,16 @@ class Transaction(models.Model):
     receiver = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='receivers')
     amount = models.FloatField()
-    debt = models.ForeignKey(Debt, on_delete=models.CASCADE)
+    debt = models.ForeignKey(Debt, null=True, on_delete=models.CASCADE)
     expense = models.ForeignKey(Expense, null=True, on_delete=models.CASCADE)
 
-    objects = managers.TransactionManager()
+    objects = managers.TransactionQuerySet.as_manager()
 
     def __str__(self):
         return 'trs-{}-{}-{}'.format(self.id, self.sender, self.receiver)
+
+    def is_self_transaction(self):
+        return self.sender.id == self.receiver.id
 
 
 class TransactionInfo(models.Model):

@@ -1,0 +1,68 @@
+{% load components %}
+<div class="card clickable shadow-lg bg-primary mt-2">
+
+    <div class="card-body">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col my-auto">
+                    <h4 class="text-title text-white">
+                        <image class="avatar-small" src="{{d.other_user.image.url}}"></image>
+                        {{d.other_user}}
+                    </h4>
+                </div>
+
+                <div class="col my-auto">
+                    <h2 class="text-title text-white text-cente">
+                        <span class="material-icons icon-32 icon-center text-{{d.color}}">euro</span>
+                        {{d.amount}}
+                    </h2>
+                </div>
+
+                <div class="col my-auto float-end">
+
+                    <h4 class="text-title text-white">
+                        <span class="material-icons icon-24 icon-center text-secondary">shopping_cart</span>
+                        Spese effettuate: {{expenses_num}}
+                    </h4>
+
+                    <h4 class="text-title text-white">
+                        <span class="material-icons icon-24 icon-center text-secondary">today</span>
+                        Registrato: {{joined}}
+                    </h4>
+
+                    {% if is_admin %}
+                    <h4 class="text-title text-white">
+                        <span class="material-icons icon-24 icon-center text-warning">shield</span>
+                        admin
+                    </h4>
+                    {% endif %}
+
+                    {% if group_admin and not is_admin %}
+
+                    <div class="btn-group mb-1" role="group" aria-label="First group">
+                        <button class="btn btn-lg btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#make_admin{{d.other_user.id}}">
+                            <span class="material-icons text-white icon-flex">shield</span>
+                        </button>
+
+                        <button class="btn btn-lg btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#remove_member{{d.other_user.id}}">
+                            <span class="material-icons text-white icon-flex">person_remove</span>
+                        </button>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+{% modal_form 'make_admin' 'Admin status' "Vuoi dare lo status di admin all'utente?" d.other_user.id %}
+{% modal_form 'remove_member' 'Rimuovi utente' "Vuoi rimuovere l'utente?" d.other_user.id %}
